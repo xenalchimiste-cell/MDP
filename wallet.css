@@ -1,0 +1,53 @@
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Table } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+
+export default function CryptoPortfolio() {
+  const [portfolio, setPortfolio] = useState([
+    { token: "WETH", name: "Wrapped Ether", price: 3167.64, balance: 35.48, percentage: 38.0, change: -2.07 },
+    { token: "USDC", name: "USD Coin", price: 1.0, balance: 11.64, percentage: 16.4, change: -0.37 },
+    { token: "ETH", name: "Ethereum", price: 3377.48, balance: 11.92, percentage: 13.2, change: -1.9 },
+    { token: "BNB", name: "Binance Coin", price: 606.54, balance: 9.21, percentage: 12.9, change: +2.52 },
+  ]);
+
+  return (
+    <div className="p-6 bg-black text-white min-h-screen">
+      <Card className="p-4">
+        <h2 className="text-2xl font-bold">Decentralized Accounts</h2>
+        <p className="text-xl mt-2">$93.86 <span className="text-green-400">(+3.07%)</span></p>
+        <Table className="mt-4">
+          <thead>
+            <tr className="text-left">
+              <th>Token</th>
+              <th>Portfolio %</th>
+              <th>Price (24h)</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {portfolio.map((asset, index) => (
+              <tr key={index} className="border-t">
+                <td>{asset.token} ({asset.name})</td>
+                <td>
+                  <Progress value={asset.percentage} className="w-32" />
+                  {asset.percentage}%
+                </td>
+                <td>
+                  ${asset.price.toFixed(2)}
+                  <span className={asset.change > 0 ? "text-green-400" : "text-red-400"}>
+                    ({asset.change}%)
+                  </span>
+                </td>
+                <td>{asset.balance}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        <Button className="mt-4">Manage Portfolio</Button>
+      </Card>
+    </div>
+  );
+}
